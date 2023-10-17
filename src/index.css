@@ -1,0 +1,95 @@
+:root {
+  --primary: #030712;
+  --secondary: #3b82f6;
+  --tertiary: #075985;
+  --glass: color-mix(in srgb, var(--tertiary), transparent 80%);
+  --text: #ffffff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background: none;
+  border: none;
+  color: var(--text);
+  text-decoration: none;
+  font-family: Ubuntu Mono;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Gabarito", sans-serif;
+}
+
+h1 {
+  font-size: clamp(1rem, 10vw, 6rem);
+}
+
+#stars {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  height: 1px;
+  width: 1px;
+  border-radius: 50%;
+  z-index: -1;
+  --star-color: color-mix(in srgb, var(--text), transparent);
+  box-shadow: 48vw -10vh 0px 0px var(--star-color),
+    -30vw -46vh 0px 0px var(--star-color), 8vw -9vh 0px 0px var(--star-color),
+    -23vw -29vh 0px 0px var(--star-color), 45vw -39vh 0px 0px var(--star-color),
+    -5vw -45vh 0px 0px var(--star-color), 10vw 9vh 0px 0px var(--star-color),
+    49vw 32vh 0px 0px var(--star-color), 12vw 24vh 0px 0px var(--star-color),
+    9vw -26vh 0px 0px var(--star-color), -40vw -31vh 0px 0px var(--star-color),
+    15vw -27vh 0px 0px var(--star-color), -2vw -23vh 0px 0px var(--star-color),
+    -9vw -20vh 0px 0px var(--star-color), -29vw 5vh 0px 0px var(--star-color),
+    -23vw -18vh 0px 0px var(--star-color), 47vw 47vh 0px 0px var(--star-color),
+    -48vw -25vh 0px 0px var(--star-color), -13vw -33vh 0px 0px var(--star-color),
+    47vw 5vh 0px 0px var(--star-color), 25vw -16vh 0px 0px var(--star-color),
+    48vw 49vh 0px 0px var(--star-color), -38vw 39vh 0px 0px var(--star-color),
+    -19vw -43vh 0px 0px var(--star-color), 26vw -8vh 0px 0px var(--star-color),
+    43vw 0vh 0px 0px var(--star-color), -13vw -8vh 0px 0px var(--star-color),
+    -41vw -13vh 0px 0px var(--star-color), -37vw 45vh 0px 0px var(--star-color),
+    -14vw -26vh 0px 0px var(--star-color), -18vw -18vh 0px 0px var(--star-color),
+    -33vw 39vh 0px 0px var(--star-color), 43vw -22vh 0px 0px var(--star-color),
+    25vw 5vh 0px 0px var(--star-color), 16vw 14vh 0px 0px var(--star-color),
+    -20vw -47vh 0px 0px var(--star-color), 33vw -43vh 0px 0px var(--star-color),
+    -3vw 45vh 0px 0px var(--star-color), -23vw -22vh 0px 0px var(--star-color),
+    -4vw -25vh 0px 0px var(--star-color), 5vw 1vh 0px 0px var(--star-color),
+    -22vw 38vh 0px 0px var(--star-color), 25vw 8vh 0px 0px var(--star-color),
+    8vw 32vh 0px 0px var(--star-color), 45vw -35vh 0px 0px var(--star-color),
+    -37vw -34vh 0px 0px var(--star-color), -3vw -28vh 0px 0px var(--star-color),
+    -47vw 13vh 0px 0px var(--star-color), -7vw -11vh 0px 0px var(--star-color),
+    49vw 34vh 0px 0px var(--star-color), 11vw 45vh 0px 0px var(--star-color),
+    -35vw 13vh 0px 0px var(--star-color), 49vw -9vh 0px 0px var(--star-color),
+    -33vw -21vh 0px 0px var(--star-color), 43vw 24vh 0px 0px var(--star-color),
+    -17vw -8vh 0px 0px var(--star-color), -33vw 14vh 0px 0px var(--star-color),
+    22vw -25vh 0px 0px var(--star-color), 26vw -6vh 0px 0px var(--star-color),
+    -7vw -50vh 0px 0px var(--star-color), -17vw 28vh 0px 0px var(--star-color),
+    -15vw 39vh 0px 0px var(--star-color), -9vw -2vh 0px 0px var(--star-color),
+    38vw 39vh 0px 0px var(--star-color), 38vw 35vh 0px 0px var(--star-color),
+    45vw -7vh 0px 0px var(--star-color), 24vw -37vh 0px 0px var(--star-color),
+    16vw -31vh 0px 0px var(--star-color), 25vw 49vh 0px 0px var(--star-color),
+    -10vw 49vh 0px 0px var(--star-color), 36vw 35vh 0px 0px var(--star-color),
+    17vw 14vh 0px 0px var(--star-color), -32vw -45vh 0px 0px var(--star-color),
+    -33vw -40vh 0px 0px var(--star-color), 44vw 2vh 0px 0px var(--star-color),
+    -14vw 13vh 0px 0px var(--star-color), -40vw 11vh 0px 0px var(--star-color),
+    0vw 39vh 0px 0px var(--star-color), 43vw 49vh 0px 0px var(--star-color),
+    -4vw -23vh 0px 0px var(--star-color), 36vw 5vh 0px 0px var(--star-color),
+    -19vw -6vh 0px 0px var(--star-color), -42vw 44vh 0px 0px var(--star-color),
+    37vw -20vh 0px 0px var(--star-color), 38vw -36vh 0px 0px var(--star-color),
+    4vw -39vh 0px 0px var(--star-color), -27vw 18vh 0px 0px var(--star-color),
+    -13vw -14vh 0px 0px var(--star-color), -19vw 22vh 0px 0px var(--star-color),
+    30vw 37vh 0px 0px var(--star-color), -34vw 35vh 0px 0px var(--star-color),
+    -2vw -34vh 0px 0px var(--star-color), -11vw 2vh 0px 0px var(--star-color),
+    31vw 37vh 0px 0px var(--star-color), -18vw -27vh 0px 0px var(--star-color),
+    -1vw -8vh 0px 0px var(--star-color), 5vw -47vh 0px 0px var(--star-color),
+    -15vw 7vh 0px 0px var(--star-color), 40vw 10vh 0px 0px var(--star-color),
+    -21vw 22vh 0px 0px var(--star-color);
+}
+
+@unocss;

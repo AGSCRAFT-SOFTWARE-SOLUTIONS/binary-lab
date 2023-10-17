@@ -1,0 +1,27 @@
+{
+  "name": "binary-lab",
+  "module": "src/server.tsx",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/server.tsx",
+    "devCSS": "postcss src/index.css --dir public/stylesheets -w"
+  },
+  "devDependencies": {
+    "@unocss/cli": "^0.56.5",
+    "@unocss/postcss": "^0.56.5",
+    "bun-types": "latest",
+    "unocss": "^0.56.5"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@elysiajs/html": "^0.7.0",
+    "@elysiajs/static": "^0.7.1",
+    "@kitajs/html": "^3.0.0",
+    "@kitajs/ts-html-plugin": "^1.2.0",
+    "elysia": "^0.7.15",
+    "postcss": "^8.4.31",
+    "postcss-cli": "^10.1.0"
+  }
+}
