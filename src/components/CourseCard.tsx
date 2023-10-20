@@ -1,7 +1,7 @@
 export const CourseCard = ({ course }: { course: string }) => (
   <a
     title={course}
-    class="grid gap-4 rd-xl overflow-hidden glow bg-glass cursor-pointer"
+    class="grid gap-4 rd-xl overflow-hidden glow cursor-pointer"
     href={`/courses/${course}`}
     hx-boost="true"
     hx-target="#swap-container"

@@ -1,8 +1,8 @@
 :root {
   --primary: #030712;
   --secondary: #3b82f6;
-  --tertiary: #075985;
-  --glass: color-mix(in srgb, var(--tertiary), transparent 80%);
+  --tertiary: #082f49;
+  --glass: color-mix(in srgb, var(--tertiary), transparent 75%);
   --text: #ffffff;
 }
 
@@ -11,10 +11,53 @@
   padding: 0;
   box-sizing: border-box;
   background: none;
-  border: none;
+  border: 0px solid;
   color: var(--text);
   text-decoration: none;
   font-family: Ubuntu Mono;
+  outline: transparent;
+}
+
+a:not(header a):not(footer a) {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+::selection {
+  background: var(--secondary);
+}
+
+dialog::backdrop {
+  background: color-mix(in srgb, #082f49, transparent);
+  backdrop-filter: blur(2px);
+}
+
+::placeholder {
+  color: color-mix(in srgb, var(--text), transparent);
+}
+
+::-webkit-scrollbar {
+  background: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--glass);
+  border-radius: 100vmax;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[required="true"]::after {
+  content: "asdfk";
 }
 
 h1,
@@ -24,10 +67,21 @@ h4,
 h5,
 h6 {
   font-family: "Gabarito", sans-serif;
+  /* font-family: Pixelify Sans; */
 }
 
 h1 {
-  font-size: clamp(1rem, 10vw, 6rem);
+  font-size: clamp(1rem, 10vw, 5rem);
+}
+
+h2 {
+  font-size: clamp(1rem, 10vw, 3rem);
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: var(--glass);
+  @apply rd-lg;
 }
 
 #stars {
@@ -38,7 +92,7 @@ h1 {
   width: 1px;
   border-radius: 50%;
   z-index: -1;
-  --star-color: color-mix(in srgb, var(--text), transparent);
+  --star-color: color-mix(in srgb, var(--text) 75%, transparent);
   box-shadow: 48vw -10vh 0px 0px var(--star-color),
     -30vw -46vh 0px 0px var(--star-color), 8vw -9vh 0px 0px var(--star-color),
     -23vw -29vh 0px 0px var(--star-color), 45vw -39vh 0px 0px var(--star-color),

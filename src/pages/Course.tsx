@@ -70,21 +70,33 @@ const courseContents: CourseContent = {
 };
 
 export const Course = ({ course, ep = 0 }: { course: string; ep: number }) => (
-  <section class="lg:h-100vh py-6rem px-[min(7vw,4rem)] lg:flex flex-row-reverse gap-4">
-    <div class="grow lg:overflow-y-auto">
+  <section class="py-6rem px-[min(7vw,4rem)] lg:flex flex-row-reverse gap-4">
+    <div class="grow">
       <video
         src="/video"
         controls="true"
-        class="aspect-ratio-[5/2] w-full"
+        class="aspect-ratio-video w-full rd-xl"
       ></video>
       <br />
-      <article class="glow p-4 rd-lg duration-200 bg-glass">
-        <h3 class="text-5 font-bold">{Object.keys(courseContents)[ep]}</h3>
-      </article>
+      <br />
+      <script
+        type="module"
+        src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+      ></script>
+      <tag of="zero-md" src="/md" class="bg-glass b b-tertiary p-4 rd-xl">
+        <template>
+          <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/gh/PrismJS/prism@1.29.0/themes/prism-tomorrow.css"
+          />
+          <link rel="stylesheet" href="/public/stylesheets/index.css" />
+        </template>
+      </tag>
     </div>
     <br />
+    <br />
     <aside class="b-text b-0 lg:border-r lg:pr-8 b-solid">
-      <h3 class="text-5 font-bold capitalize">{course}</h3>
+      <h3 class="font-bold capitalize">{course}</h3>
       {Object.keys(courseContents).map((topic) => (
         <>
           <h4 class="ml-4 whitespace-nowrap overflow-x-hidden text-ellipsis">

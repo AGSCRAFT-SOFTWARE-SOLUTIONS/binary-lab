@@ -9,23 +9,42 @@ import { Footer } from "./components/Footer";
 import { Home } from "./pages/Home";
 import { CourseList } from "./pages/CourseList";
 import { Course } from "./pages/Course";
+import { SignInForm } from "./components/SignInForm";
+import { SignUpForm } from "./components/SignUpForm";
 
-new Elysia()
+const app = new Elysia()
   .use(html())
   .use(staticPlugin())
   .get(`/`, ({ headers }) => smartResponse(headers, <Home />))
-  .get(`/courses`, ({ headers }) => smartResponse(headers, <CourseList />))
-  .get(
-    `/courses/:course`,
-    (ctx) => (ctx.set.redirect = `/courses/${ctx.params.course}/0`)
+  .group("/courses", (app) =>
+    app
+      .get(`/`, ({ headers }) => smartResponse(headers, <CourseList />))
+      .group(`/:course`, (app) =>
+        app
+          .get(
+            `/`,
+            (ctx) => (ctx.set.redirect = `/courses/${ctx.params.course}/0`)
+          )
+          .get(`/:ep`, ({ headers, params }) =>
+            smartResponse(
+              headers,
+              <Course course={params.course} ep={Number(params.ep)} />
+            )
+          )
+      )
   )
-  .get(`/courses/:course/:ep`, ({ headers, params }) =>
-    smartResponse(
-      headers,
-      <Course course={params.course} ep={Number(params.ep)} />
-    )
+  .group(`/auth`, (app) =>
+    app
+      .get(`/sign-in`, ({ headers, set }) =>
+        headers["hx-request"] ? <SignInForm /> : (set.redirect = "/")
+      )
+      .get(`/sign-up`, ({ headers, set }) =>
+        headers["hx-request"] ? <SignUpForm /> : (set.redirect = "/")
+      )
   )
+  .group(`/profile`, (app) => app.get(`/`, () => "hellow user"))
   .get("/video", () => Bun.file("public/assets/sample-video.mp4"))
+  .get("/md", () => Bun.file("README.md"))
   .listen(3000, ({ hostname, port }) =>
     console.log(`🦊 runnin on http://${hostname}:${port}`)
   );
@@ -50,7 +69,7 @@ const BaseHTML = ({ children }: { children?: Children }) => (
           crossorigin="true"
         ></link>
         <link
-          href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gabarito&&family=Ubuntu+Mono&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gabarito&&family=Ubuntu+Mono&family=Pixelify+Sans&display=swap"
           rel="stylesheet"
         ></link>
         <script
@@ -73,13 +92,6 @@ const BaseHTML = ({ children }: { children?: Children }) => (
         <Header />
         <main id="swap-container">{children}</main>
         <Footer />
-        <tag
-          of="dialog"
-          _="on toggleDialog(state) if state me.show() else me.close() end "
-          class="absolute"
-        >
-          Your dialog content goes here
-        </tag>
       </body>
     </html>
   </>

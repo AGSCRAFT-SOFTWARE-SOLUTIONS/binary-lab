@@ -21,7 +21,9 @@
     "@kitajs/html": "^3.0.0",
     "@kitajs/ts-html-plugin": "^1.2.0",
     "elysia": "^0.7.15",
+    "md-block": "^0.0.1",
     "postcss": "^8.4.31",
-    "postcss-cli": "^10.1.0"
+    "postcss-cli": "^10.1.0",
+    "zero-md": "^2.5.3"
   }
 }

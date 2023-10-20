@@ -6,7 +6,7 @@ const floatIconClasses =
 export const Home = () => (
   <>
     <section class="h-100vh grid place-items-center px-[min(7vw,4rem)]">
-      <h1 class="border-1px border-amber text-center font-bold line-height-80% uppercase w-[clamp(22rem,75vw,70rem)] animate-fade-in-up animate-ease text-accent drop-shadow-2rem">
+      <h1 class="text-center font-bold line-height-80% uppercase w-[clamp(22rem,75vw,70rem)] animate-fade-in-up animate-ease text-accent drop-shadow-2rem">
         Learn programming in a new way!
       </h1>
       <img
