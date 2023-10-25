@@ -41,7 +41,7 @@ export const SignInForm = () => (
     <p class="text-center">
       Don't have an account?{" "}
       <a
-        href="/auth/sign-up"
+        href="/sign-up-form"
         hx-boost="true"
         hx-push-url="false"
         hx-target="#authModal"

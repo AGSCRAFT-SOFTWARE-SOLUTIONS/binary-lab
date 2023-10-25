@@ -11,10 +11,14 @@ import { CourseList } from "./pages/CourseList";
 import { Course } from "./pages/Course";
 import { SignInForm } from "./components/SignInForm";
 import { SignUpForm } from "./components/SignUpForm";
+import { auth, githubAuth } from "./lib/auth/lucia";
+import { cookie } from "@elysiajs/cookie";
+import { parseCookie } from "lucia/utils";
 
-const app = new Elysia()
+new Elysia()
   .use(html())
   .use(staticPlugin())
+  .use(cookie())
   .get(`/`, ({ headers }) => smartResponse(headers, <Home />))
   .group("/courses", (app) =>
     app
@@ -33,16 +37,110 @@ const app = new Elysia()
           )
       )
   )
-  .group(`/auth`, (app) =>
-    app
-      .get(`/sign-in`, ({ headers, set }) =>
-        headers["hx-request"] ? <SignInForm /> : (set.redirect = "/")
-      )
-      .get(`/sign-up`, ({ headers, set }) =>
-        headers["hx-request"] ? <SignUpForm /> : (set.redirect = "/")
-      )
+  .get(`/sign-in-form`, ({ headers, set }) =>
+    headers["hx-request"] ? <SignInForm /> : (set.redirect = "/")
   )
-  .group(`/profile`, (app) => app.get(`/`, () => "hellow user"))
+  .get(`/sign-up-form`, ({ headers, set }) =>
+    headers["hx-request"] ? <SignUpForm /> : (set.redirect = "/")
+  )
+  .group("/auth", (app) =>
+    app.group(`/sign-in`, (app) =>
+      app.group(`/github`, (app) =>
+        app
+          .get(`/`, async ({ cookie, setCookie, set, removeCookie }) => {
+            if (!cookie["basicDetails"]) {
+              set.redirect = "/";
+              set.status = 412;
+              return;
+            }
+            const [url, state] = await githubAuth.getAuthorizationUrl();
+
+            setCookie("github_oauth_state", state, {
+              httpOnly: true,
+              path: "/",
+              maxAge: 60 * 60,
+            });
+
+            set.status = 302;
+            set.redirect = url.toString();
+
+            return `loggin in with github!`;
+          })
+          .get(`/callback`, async (ctx) => {
+            const storedState = ctx.cookie.github_oauth_state;
+            const state = ctx.query.state;
+            const code = ctx.query.code;
+            if (
+              !storedState ||
+              !state ||
+              storedState !== state ||
+              typeof code !== "string"
+            ) {
+              console.log(
+                storedState,
+                state,
+                storedState !== state,
+                typeof code
+              );
+
+              return (ctx.set.status = 400);
+            }
+            try {
+              const { getExistingUser, githubUser, createUser } =
+                await githubAuth.validateCallback(code);
+
+              const getUser = async () => {
+                const existingUser = await getExistingUser();
+
+                if (existingUser) return existingUser;
+
+                const basicDetails = JSON.parse(ctx.cookie["basicDetails"]);
+
+                const user = await createUser({
+                  attributes: {
+                    ...basicDetails,
+                    email: githubUser.email,
+                  },
+                });
+
+                return user;
+              };
+
+              const user = await getUser();
+              const session = await auth.createSession({
+                userId: user.userId,
+                attributes: {},
+              });
+
+              const authRequest = auth.handleRequest(ctx);
+              authRequest.setSession(session);
+
+              ctx.set.status = 302;
+              ctx.set.redirect = "/";
+
+              return;
+            } catch (e) {
+              return e;
+            }
+          })
+      )
+    )
+  )
+  .group(`/profile`, (app) =>
+    app.get(`/`, async (ctx) => {
+      const authRequest = auth.handleRequest(ctx);
+      const user = await authRequest
+        .validate()
+        .then((session) => session.user)
+        .catch((e) => null);
+      if (user) {
+        console.log(user);
+
+        return `hi, ${user.name}`;
+      }
+      return `your current not logged in, so im giving you a sigin form. enjoy`;
+    })
+  )
   .get("/video", () => Bun.file("public/assets/sample-video.mp4"))
   .get("/md", () => Bun.file("README.md"))
   .listen(3000, ({ hostname, port }) =>
@@ -84,7 +182,7 @@ const BaseHTML = ({ children }: { children?: Children }) => (
           defer
         ></script>
       </head>
-      <body class="box-border bg-coolGray-950 color-white">
+      <body class="box-border bg-primary color-white">
         <div
           id="stars"
           class="animate-shake-y animate-duration-30000 animate-iteration-infinite"

@@ -351,9 +351,9 @@ pre[class*="language-"] {
 
 .bg-\#04A9D3{--un-bg-opacity:1;background-color:rgba(4,169,211,var(--un-bg-opacity));}
 
-.bg-coolGray-950{--un-bg-opacity:1;background-color:rgba(3,7,18,var(--un-bg-opacity));}
-
 .bg-glass{background-color:var(--glass);}
+
+.bg-primary{background-color:var(--primary);}
 
 .bg-secondary{background-color:var(--secondary);}
 

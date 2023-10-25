@@ -3,10 +3,11 @@
   "module": "src/server.tsx",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/server.tsx",
-    "devCSS": "postcss src/index.css --dir public/stylesheets -w"
+    "dev": "clear && bun --watch src/server.tsx",
+    "devCSS": "clear && postcss src/index.css --dir public/stylesheets -w"
   },
   "devDependencies": {
+    "@types/pg": "^8.10.7",
     "@unocss/cli": "^0.56.5",
     "@unocss/postcss": "^0.56.5",
     "bun-types": "latest",
@@ -16,11 +17,15 @@
     "typescript": "^5.0.0"
   },
   "dependencies": {
+    "@elysiajs/cookie": "^0.7.0",
     "@elysiajs/html": "^0.7.0",
     "@elysiajs/static": "^0.7.1",
     "@kitajs/html": "^3.0.0",
     "@kitajs/ts-html-plugin": "^1.2.0",
-    "elysia": "^0.7.15",
+    "@lucia-auth/adapter-postgresql": "^2.0.1",
+    "@lucia-auth/oauth": "^3.3.1",
+    "elysia": "latest",
+    "lucia": "latest",
     "md-block": "^0.0.1",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",

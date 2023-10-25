@@ -42,7 +42,7 @@ export const Header = () => (
         <i class="fa-solid fa-magnifying-glass"></i>
       </button>
       <button
-        hx-get="/auth/sign-up"
+        hx-get="/sign-up-form"
         hx-target="body"
         hx-swap="afterbegin"
         class="cursor-pointer"

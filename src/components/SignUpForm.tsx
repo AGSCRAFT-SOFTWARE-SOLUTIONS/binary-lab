@@ -33,8 +33,8 @@ export const SignUpForm = () => (
         <input
           class="inputStyle"
           type="text"
-          placeholder="College"
-          name="college"
+          placeholder="Institute"
+          name="institute"
           required="true"
         />
       </form>
@@ -98,7 +98,10 @@ export const SignUpForm = () => (
           class="absolute top-0 left-0 h-full w-full"
         />
       </button>
-      <button class={"inputStyle" + " relative  "}>
+      <button
+        class={"inputStyle" + " relative  "}
+        onclick='location.href = "/auth/sign-in/github"'
+      >
         <i class="fa-brands fa-github"></i> Sign in with Github
         <input
           type="submit"
@@ -113,7 +116,7 @@ export const SignUpForm = () => (
     <p class="text-center">
       Already have an account?{" "}
       <a
-        href="/auth/sign-in"
+        href="/sign-in-form"
         hx-boost="true"
         hx-push-url="false"
         hx-target="#authModal"
@@ -137,9 +140,9 @@ export const SignUpForm = () => (
 
       function saveAsCookie() {
         if(!basicDetailsForm.checkValidity()) return
-        const { name, phone, city, college } = basicDetailsForm;
+        const { name, phone, city, institute } = basicDetailsForm;
         const expires = new Date(Date.now() + 10 * 60 * 1000).toUTCString();
-        document.cookie = \`basicDetails=\${JSON.stringify({ name : name.value, phone : phone.value, city : city.value, college : college.value })}; expires=\${expires}; path=/\`;
+        document.cookie = \`basicDetails=\${JSON.stringify({ "name" : name.value, "phone" : phone.value, "location" : city.value, "institute" : institute.value })}; expires=\${expires}; path=/\`;
       }
 
       function disableBasicFormButtonOverlay(){
@@ -148,7 +151,7 @@ export const SignUpForm = () => (
         })
       };
       
-      ['name', 'phone', 'city', 'college'].forEach(field => {
+      ['name', 'phone', 'city', 'institute'].forEach(field => {
         basicDetailsForm[field].value = prevData[field] ?? "";
         basicDetailsForm[field].addEventListener("keyup", () => {
             saveAsCookie();
