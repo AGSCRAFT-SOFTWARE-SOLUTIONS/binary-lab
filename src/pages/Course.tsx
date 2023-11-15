@@ -70,7 +70,7 @@ const courseContents: CourseContent = {
 };
 
 export const Course = ({ course, ep = 0 }: { course: string; ep: number }) => (
-  <section class="py-6rem px-[min(7vw,4rem)] lg:flex flex-row-reverse gap-4">
+  <section class="lg:flex flex-row-reverse gap-4">
     <div class="grow">
       <video
         src="/video"
@@ -89,7 +89,7 @@ export const Course = ({ course, ep = 0 }: { course: string; ep: number }) => (
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/gh/PrismJS/prism@1.29.0/themes/prism-tomorrow.css"
           />
-          <link rel="stylesheet" href="/public/stylesheets/index.css" />
+          <link rel="stylesheet" href="/public/stylesheets/style.css" />
         </template>
       </tag>
     </div>

@@ -18,9 +18,10 @@ export default defineConfig({
     inputStyle: `glow block p-2 my-4 text-1rem rd-lg m-auto w-90% `,
     fieldsetStyle: "rd-lg glow ",
     legendStyle: "m-2 p-2 ",
+    "course-grid": "grid grid-cols-[repeat(auto-fit,minmax(21rem,1fr))] gap-6",
   },
   content: {
-    filesystem: ["**/*.tsx"],
+    filesystem: ["src/**/*.tsx"],
   },
   presets: [presetUno()],
 });

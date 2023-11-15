@@ -92,66 +92,118 @@ pre[class*="language-"] {
   border-radius: 50%;
   z-index: -1;
   --star-color: color-mix(in srgb, var(--text) 75%, transparent);
-  box-shadow: 48vw -10vh 0px 0px var(--star-color),
-    -30vw -46vh 0px 0px var(--star-color), 8vw -9vh 0px 0px var(--star-color),
-    -23vw -29vh 0px 0px var(--star-color), 45vw -39vh 0px 0px var(--star-color),
-    -5vw -45vh 0px 0px var(--star-color), 10vw 9vh 0px 0px var(--star-color),
-    49vw 32vh 0px 0px var(--star-color), 12vw 24vh 0px 0px var(--star-color),
-    9vw -26vh 0px 0px var(--star-color), -40vw -31vh 0px 0px var(--star-color),
-    15vw -27vh 0px 0px var(--star-color), -2vw -23vh 0px 0px var(--star-color),
-    -9vw -20vh 0px 0px var(--star-color), -29vw 5vh 0px 0px var(--star-color),
-    -23vw -18vh 0px 0px var(--star-color), 47vw 47vh 0px 0px var(--star-color),
-    -48vw -25vh 0px 0px var(--star-color), -13vw -33vh 0px 0px var(--star-color),
-    47vw 5vh 0px 0px var(--star-color), 25vw -16vh 0px 0px var(--star-color),
-    48vw 49vh 0px 0px var(--star-color), -38vw 39vh 0px 0px var(--star-color),
-    -19vw -43vh 0px 0px var(--star-color), 26vw -8vh 0px 0px var(--star-color),
-    43vw 0vh 0px 0px var(--star-color), -13vw -8vh 0px 0px var(--star-color),
-    -41vw -13vh 0px 0px var(--star-color), -37vw 45vh 0px 0px var(--star-color),
-    -14vw -26vh 0px 0px var(--star-color), -18vw -18vh 0px 0px var(--star-color),
-    -33vw 39vh 0px 0px var(--star-color), 43vw -22vh 0px 0px var(--star-color),
-    25vw 5vh 0px 0px var(--star-color), 16vw 14vh 0px 0px var(--star-color),
-    -20vw -47vh 0px 0px var(--star-color), 33vw -43vh 0px 0px var(--star-color),
-    -3vw 45vh 0px 0px var(--star-color), -23vw -22vh 0px 0px var(--star-color),
-    -4vw -25vh 0px 0px var(--star-color), 5vw 1vh 0px 0px var(--star-color),
-    -22vw 38vh 0px 0px var(--star-color), 25vw 8vh 0px 0px var(--star-color),
-    8vw 32vh 0px 0px var(--star-color), 45vw -35vh 0px 0px var(--star-color),
-    -37vw -34vh 0px 0px var(--star-color), -3vw -28vh 0px 0px var(--star-color),
-    -47vw 13vh 0px 0px var(--star-color), -7vw -11vh 0px 0px var(--star-color),
-    49vw 34vh 0px 0px var(--star-color), 11vw 45vh 0px 0px var(--star-color),
-    -35vw 13vh 0px 0px var(--star-color), 49vw -9vh 0px 0px var(--star-color),
-    -33vw -21vh 0px 0px var(--star-color), 43vw 24vh 0px 0px var(--star-color),
-    -17vw -8vh 0px 0px var(--star-color), -33vw 14vh 0px 0px var(--star-color),
-    22vw -25vh 0px 0px var(--star-color), 26vw -6vh 0px 0px var(--star-color),
-    -7vw -50vh 0px 0px var(--star-color), -17vw 28vh 0px 0px var(--star-color),
-    -15vw 39vh 0px 0px var(--star-color), -9vw -2vh 0px 0px var(--star-color),
-    38vw 39vh 0px 0px var(--star-color), 38vw 35vh 0px 0px var(--star-color),
-    45vw -7vh 0px 0px var(--star-color), 24vw -37vh 0px 0px var(--star-color),
-    16vw -31vh 0px 0px var(--star-color), 25vw 49vh 0px 0px var(--star-color),
-    -10vw 49vh 0px 0px var(--star-color), 36vw 35vh 0px 0px var(--star-color),
-    17vw 14vh 0px 0px var(--star-color), -32vw -45vh 0px 0px var(--star-color),
-    -33vw -40vh 0px 0px var(--star-color), 44vw 2vh 0px 0px var(--star-color),
-    -14vw 13vh 0px 0px var(--star-color), -40vw 11vh 0px 0px var(--star-color),
-    0vw 39vh 0px 0px var(--star-color), 43vw 49vh 0px 0px var(--star-color),
-    -4vw -23vh 0px 0px var(--star-color), 36vw 5vh 0px 0px var(--star-color),
-    -19vw -6vh 0px 0px var(--star-color), -42vw 44vh 0px 0px var(--star-color),
-    37vw -20vh 0px 0px var(--star-color), 38vw -36vh 0px 0px var(--star-color),
-    4vw -39vh 0px 0px var(--star-color), -27vw 18vh 0px 0px var(--star-color),
-    -13vw -14vh 0px 0px var(--star-color), -19vw 22vh 0px 0px var(--star-color),
-    30vw 37vh 0px 0px var(--star-color), -34vw 35vh 0px 0px var(--star-color),
-    -2vw -34vh 0px 0px var(--star-color), -11vw 2vh 0px 0px var(--star-color),
-    31vw 37vh 0px 0px var(--star-color), -18vw -27vh 0px 0px var(--star-color),
-    -1vw -8vh 0px 0px var(--star-color), 5vw -47vh 0px 0px var(--star-color),
-    -15vw 7vh 0px 0px var(--star-color), 40vw 10vh 0px 0px var(--star-color),
+  box-shadow:
+    48vw -10vh 0px 0px var(--star-color),
+    -30vw -46vh 0px 0px var(--star-color),
+    8vw -9vh 0px 0px var(--star-color),
+    -23vw -29vh 0px 0px var(--star-color),
+    45vw -39vh 0px 0px var(--star-color),
+    -5vw -45vh 0px 0px var(--star-color),
+    10vw 9vh 0px 0px var(--star-color),
+    49vw 32vh 0px 0px var(--star-color),
+    12vw 24vh 0px 0px var(--star-color),
+    9vw -26vh 0px 0px var(--star-color),
+    -40vw -31vh 0px 0px var(--star-color),
+    15vw -27vh 0px 0px var(--star-color),
+    -2vw -23vh 0px 0px var(--star-color),
+    -9vw -20vh 0px 0px var(--star-color),
+    -29vw 5vh 0px 0px var(--star-color),
+    -23vw -18vh 0px 0px var(--star-color),
+    47vw 47vh 0px 0px var(--star-color),
+    -48vw -25vh 0px 0px var(--star-color),
+    -13vw -33vh 0px 0px var(--star-color),
+    47vw 5vh 0px 0px var(--star-color),
+    25vw -16vh 0px 0px var(--star-color),
+    48vw 49vh 0px 0px var(--star-color),
+    -38vw 39vh 0px 0px var(--star-color),
+    -19vw -43vh 0px 0px var(--star-color),
+    26vw -8vh 0px 0px var(--star-color),
+    43vw 0vh 0px 0px var(--star-color),
+    -13vw -8vh 0px 0px var(--star-color),
+    -41vw -13vh 0px 0px var(--star-color),
+    -37vw 45vh 0px 0px var(--star-color),
+    -14vw -26vh 0px 0px var(--star-color),
+    -18vw -18vh 0px 0px var(--star-color),
+    -33vw 39vh 0px 0px var(--star-color),
+    43vw -22vh 0px 0px var(--star-color),
+    25vw 5vh 0px 0px var(--star-color),
+    16vw 14vh 0px 0px var(--star-color),
+    -20vw -47vh 0px 0px var(--star-color),
+    33vw -43vh 0px 0px var(--star-color),
+    -3vw 45vh 0px 0px var(--star-color),
+    -23vw -22vh 0px 0px var(--star-color),
+    -4vw -25vh 0px 0px var(--star-color),
+    5vw 1vh 0px 0px var(--star-color),
+    -22vw 38vh 0px 0px var(--star-color),
+    25vw 8vh 0px 0px var(--star-color),
+    8vw 32vh 0px 0px var(--star-color),
+    45vw -35vh 0px 0px var(--star-color),
+    -37vw -34vh 0px 0px var(--star-color),
+    -3vw -28vh 0px 0px var(--star-color),
+    -47vw 13vh 0px 0px var(--star-color),
+    -7vw -11vh 0px 0px var(--star-color),
+    49vw 34vh 0px 0px var(--star-color),
+    11vw 45vh 0px 0px var(--star-color),
+    -35vw 13vh 0px 0px var(--star-color),
+    49vw -9vh 0px 0px var(--star-color),
+    -33vw -21vh 0px 0px var(--star-color),
+    43vw 24vh 0px 0px var(--star-color),
+    -17vw -8vh 0px 0px var(--star-color),
+    -33vw 14vh 0px 0px var(--star-color),
+    22vw -25vh 0px 0px var(--star-color),
+    26vw -6vh 0px 0px var(--star-color),
+    -7vw -50vh 0px 0px var(--star-color),
+    -17vw 28vh 0px 0px var(--star-color),
+    -15vw 39vh 0px 0px var(--star-color),
+    -9vw -2vh 0px 0px var(--star-color),
+    38vw 39vh 0px 0px var(--star-color),
+    38vw 35vh 0px 0px var(--star-color),
+    45vw -7vh 0px 0px var(--star-color),
+    24vw -37vh 0px 0px var(--star-color),
+    16vw -31vh 0px 0px var(--star-color),
+    25vw 49vh 0px 0px var(--star-color),
+    -10vw 49vh 0px 0px var(--star-color),
+    36vw 35vh 0px 0px var(--star-color),
+    17vw 14vh 0px 0px var(--star-color),
+    -32vw -45vh 0px 0px var(--star-color),
+    -33vw -40vh 0px 0px var(--star-color),
+    44vw 2vh 0px 0px var(--star-color),
+    -14vw 13vh 0px 0px var(--star-color),
+    -40vw 11vh 0px 0px var(--star-color),
+    0vw 39vh 0px 0px var(--star-color),
+    43vw 49vh 0px 0px var(--star-color),
+    -4vw -23vh 0px 0px var(--star-color),
+    36vw 5vh 0px 0px var(--star-color),
+    -19vw -6vh 0px 0px var(--star-color),
+    -42vw 44vh 0px 0px var(--star-color),
+    37vw -20vh 0px 0px var(--star-color),
+    38vw -36vh 0px 0px var(--star-color),
+    4vw -39vh 0px 0px var(--star-color),
+    -27vw 18vh 0px 0px var(--star-color),
+    -13vw -14vh 0px 0px var(--star-color),
+    -19vw 22vh 0px 0px var(--star-color),
+    30vw 37vh 0px 0px var(--star-color),
+    -34vw 35vh 0px 0px var(--star-color),
+    -2vw -34vh 0px 0px var(--star-color),
+    -11vw 2vh 0px 0px var(--star-color),
+    31vw 37vh 0px 0px var(--star-color),
+    -18vw -27vh 0px 0px var(--star-color),
+    -1vw -8vh 0px 0px var(--star-color),
+    5vw -47vh 0px 0px var(--star-color),
+    -15vw 7vh 0px 0px var(--star-color),
+    40vw 10vh 0px 0px var(--star-color),
     -21vw 22vh 0px 0px var(--star-color);
 }
 
 /* layer: preflights */
 
-*,::before,::after{--un-rotate:0;--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-scale-x:1;--un-scale-y:1;--un-scale-z:1;--un-skew-x:0;--un-skew-y:0;--un-translate-x:0;--un-translate-y:0;--un-translate-z:0;--un-pan-x: ;--un-pan-y: ;--un-pinch-zoom: ;--un-scroll-snap-strictness:proximity;--un-ordinal: ;--un-slashed-zero: ;--un-numeric-figure: ;--un-numeric-spacing: ;--un-numeric-fraction: ;--un-border-spacing-x:0;--un-border-spacing-y:0;--un-ring-offset-shadow:0 0 rgba(0,0,0,0);--un-ring-shadow:0 0 rgba(0,0,0,0);--un-shadow-inset: ;--un-shadow:0 0 rgba(0,0,0,0);--un-ring-inset: ;--un-ring-offset-width:0px;--un-ring-offset-color:#fff;--un-ring-width:0px;--un-ring-color:rgba(147,197,253,0.5);--un-blur: ;--un-brightness: ;--un-contrast: ;--un-drop-shadow: ;--un-grayscale: ;--un-hue-rotate: ;--un-invert: ;--un-saturate: ;--un-sepia: ;--un-backdrop-blur: ;--un-backdrop-brightness: ;--un-backdrop-contrast: ;--un-backdrop-grayscale: ;--un-backdrop-hue-rotate: ;--un-backdrop-invert: ;--un-backdrop-opacity: ;--un-backdrop-saturate: ;--un-backdrop-sepia: ;}
+*,::before,::after{--un-rotate:0;--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-scale-x:1;--un-scale-y:1;--un-scale-z:1;--un-skew-x:0;--un-skew-y:0;--un-translate-x:0;--un-translate-y:0;--un-translate-z:0;--un-pan-x: ;--un-pan-y: ;--un-pinch-zoom: ;--un-scroll-snap-strictness:proximity;--un-ordinal: ;--un-slashed-zero: ;--un-numeric-figure: ;--un-numeric-spacing: ;--un-numeric-fraction: ;--un-border-spacing-x:0;--un-border-spacing-y:0;--un-ring-offset-shadow:0 0 rgb(0 0 0 / 0);--un-ring-shadow:0 0 rgb(0 0 0 / 0);--un-shadow-inset: ;--un-shadow:0 0 rgb(0 0 0 / 0);--un-ring-inset: ;--un-ring-offset-width:0px;--un-ring-offset-color:#fff;--un-ring-width:0px;--un-ring-color:rgb(147 197 253 / 0.5);--un-blur: ;--un-brightness: ;--un-contrast: ;--un-drop-shadow: ;--un-grayscale: ;--un-hue-rotate: ;--un-invert: ;--un-saturate: ;--un-sepia: ;--un-backdrop-blur: ;--un-backdrop-brightness: ;--un-backdrop-contrast: ;--un-backdrop-grayscale: ;--un-backdrop-hue-rotate: ;--un-backdrop-invert: ;--un-backdrop-opacity: ;--un-backdrop-saturate: ;--un-backdrop-sepia: ;}
 
-::backdrop{--un-rotate:0;--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-scale-x:1;--un-scale-y:1;--un-scale-z:1;--un-skew-x:0;--un-skew-y:0;--un-translate-x:0;--un-translate-y:0;--un-translate-z:0;--un-pan-x: ;--un-pan-y: ;--un-pinch-zoom: ;--un-scroll-snap-strictness:proximity;--un-ordinal: ;--un-slashed-zero: ;--un-numeric-figure: ;--un-numeric-spacing: ;--un-numeric-fraction: ;--un-border-spacing-x:0;--un-border-spacing-y:0;--un-ring-offset-shadow:0 0 rgba(0,0,0,0);--un-ring-shadow:0 0 rgba(0,0,0,0);--un-shadow-inset: ;--un-shadow:0 0 rgba(0,0,0,0);--un-ring-inset: ;--un-ring-offset-width:0px;--un-ring-offset-color:#fff;--un-ring-width:0px;--un-ring-color:rgba(147,197,253,0.5);--un-blur: ;--un-brightness: ;--un-contrast: ;--un-drop-shadow: ;--un-grayscale: ;--un-hue-rotate: ;--un-invert: ;--un-saturate: ;--un-sepia: ;--un-backdrop-blur: ;--un-backdrop-brightness: ;--un-backdrop-contrast: ;--un-backdrop-grayscale: ;--un-backdrop-hue-rotate: ;--un-backdrop-invert: ;--un-backdrop-opacity: ;--un-backdrop-saturate: ;--un-backdrop-sepia: ;}
+::backdrop{--un-rotate:0;--un-rotate-x:0;--un-rotate-y:0;--un-rotate-z:0;--un-scale-x:1;--un-scale-y:1;--un-scale-z:1;--un-skew-x:0;--un-skew-y:0;--un-translate-x:0;--un-translate-y:0;--un-translate-z:0;--un-pan-x: ;--un-pan-y: ;--un-pinch-zoom: ;--un-scroll-snap-strictness:proximity;--un-ordinal: ;--un-slashed-zero: ;--un-numeric-figure: ;--un-numeric-spacing: ;--un-numeric-fraction: ;--un-border-spacing-x:0;--un-border-spacing-y:0;--un-ring-offset-shadow:0 0 rgb(0 0 0 / 0);--un-ring-shadow:0 0 rgb(0 0 0 / 0);--un-shadow-inset: ;--un-shadow:0 0 rgb(0 0 0 / 0);--un-ring-inset: ;--un-ring-offset-width:0px;--un-ring-offset-color:#fff;--un-ring-width:0px;--un-ring-color:rgb(147 197 253 / 0.5);--un-blur: ;--un-brightness: ;--un-contrast: ;--un-drop-shadow: ;--un-grayscale: ;--un-hue-rotate: ;--un-invert: ;--un-saturate: ;--un-sepia: ;--un-backdrop-blur: ;--un-backdrop-brightness: ;--un-backdrop-contrast: ;--un-backdrop-grayscale: ;--un-backdrop-hue-rotate: ;--un-backdrop-invert: ;--un-backdrop-opacity: ;--un-backdrop-saturate: ;--un-backdrop-sepia: ;}
 
 /* layer: shortcuts */
+
+.course-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(21rem,1fr));gap:1.5rem;}
 
 .inputStyle{margin:auto;margin-top:1rem;margin-bottom:1rem;display:block;width:90%;border-width:1px;border-color:var(--tertiary);border-radius:0.5rem;background-color:var(--glass);padding:0.5rem;font-size:1rem;transition-duration:500ms;}
 
@@ -223,15 +275,17 @@ pre[class*="language-"] {
 
 .grid-cols-\[min-content_1fr_1fr\]{grid-template-columns:min-content 1fr 1fr;}
 
-.grid-cols-\[repeat\(auto-fit\,minmax\(21rem\,1fr\)\)\]{grid-template-columns:repeat(auto-fit,minmax(21rem,1fr));}
-
 .grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+
+.m-2{margin:0.5rem;}
 
 .m-a{margin:auto;}
 
 .ml-4{margin-left:1rem;}
 
 .ml-8{margin-left:2rem;}
+
+.mt-12{margin-top:3rem;}
 
 .box-border{box-sizing:border-box;}
 
@@ -247,11 +301,13 @@ pre[class*="language-"] {
 
 .h-full{height:100%;}
 
-.max-w-100rem{max-width:100rem;}
+.max-w-104rem{max-width:104rem;}
 
 .w-\[clamp\(22rem\,75vw\,70rem\)\]{width:clamp(22rem,75vw,70rem);}
 
 .w-\[clamp\(22rem\,75vw\,80rem\)\]{width:clamp(22rem,75vw,80rem);}
+
+.w-\[max-content\]{width:max-content;}
 
 .w-\[min\(100\%\,30rem\)\]{width:min(100%,30rem);}
 
@@ -269,6 +325,8 @@ pre[class*="language-"] {
 
 .translate-y--50\%{--un-translate-y:-50%;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
 
+.translate-y--6rem{--un-translate-y:-6rem;transform:translateX(var(--un-translate-x)) translateY(var(--un-translate-y)) translateZ(var(--un-translate-z)) rotate(var(--un-rotate)) rotateX(var(--un-rotate-x)) rotateY(var(--un-rotate-y)) rotateZ(var(--un-rotate-z)) skewX(var(--un-skew-x)) skewY(var(--un-skew-y)) scaleX(var(--un-scale-x)) scaleY(var(--un-scale-y)) scaleZ(var(--un-scale-z));}
+
 @keyframes fade-in-bottom-left{from{opacity:0;transform:translate3d(-100%,100%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 
 @keyframes fade-in-bottom-right{from{opacity:0;transform:translate3d(100%,100%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
@@ -278,8 +336,6 @@ pre[class*="language-"] {
 @keyframes fade-in-top-left{from{opacity:0;transform:translate3d(-100%,-100%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 
 @keyframes fade-in-top-right{from{opacity:0;transform:translate3d(100%,-100%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
-
-@keyframes fade-in-up{from{opacity:0;transform:translate3d(0,100%,0)}to{opacity:1;transform:translate3d(0,0,0)}}
 
 @keyframes shake-y{from,to{transform:translate3d(0,0,0)}10%,30%,50%,70%,90%{transform:translate3d(0,-10px,0)}20%,40%,60%,80%{transform:translate3d(0,10px,0)}}
 
@@ -292,8 +348,6 @@ pre[class*="language-"] {
 .animate-fade-in-top-left{animation:fade-in-top-left 1s linear 1;}
 
 .animate-fade-in-top-right{animation:fade-in-top-right 1s linear 1;}
-
-.animate-fade-in-up{animation:fade-in-up 1s linear 1;}
 
 .animate-shake-y{animation:shake-y 1s linear 1;}
 
@@ -315,6 +369,8 @@ pre[class*="language-"] {
 
 .gap-1{gap:0.25rem;}
 
+.gap-12{gap:3rem;}
+
 .gap-2{gap:0.5rem;}
 
 .gap-4{gap:1rem;}
@@ -333,13 +389,15 @@ pre[class*="language-"] {
 
 .b{border-width:1px;}
 
-.b-0{border-width:0;}
+.b-0{border-width:0px;}
 
 .b-tertiary{border-color:var(--tertiary);}
 
 .b-text{border-color:var(--text);}
 
 .rd{border-radius:0.25rem;}
+
+.rd-2xl{border-radius:1rem;}
 
 .rd-full{border-radius:9999px;}
 
@@ -349,7 +407,7 @@ pre[class*="language-"] {
 
 .b-solid{border-style:solid;}
 
-.bg-\#04A9D3{--un-bg-opacity:1;background-color:rgba(4,169,211,var(--un-bg-opacity));}
+.bg-\#04A9D3{--un-bg-opacity:1;background-color:rgb(4 169 211 / var(--un-bg-opacity));}
 
 .bg-glass{background-color:var(--glass);}
 
@@ -358,6 +416,8 @@ pre[class*="language-"] {
 .bg-secondary{background-color:var(--secondary);}
 
 .object-cover{object-fit:cover;}
+
+.p-3{padding:0.75rem;}
 
 .p-4{padding:1rem;}
 
@@ -399,13 +459,15 @@ pre[class*="language-"] {
 
 .capitalize{text-transform:capitalize;}
 
-.color-gray{--un-text-opacity:1;color:rgba(156,163,175,var(--un-text-opacity));}
+.color-gray{--un-text-opacity:1;color:rgb(156 163 175 / var(--un-text-opacity));}
 
-.color-white{--un-text-opacity:1;color:rgba(255,255,255,var(--un-text-opacity));}
+.color-red{--un-text-opacity:1;color:rgb(248 113 113 / var(--un-text-opacity));}
+
+.color-white{--un-text-opacity:1;color:rgb(255 255 255 / var(--un-text-opacity));}
 
 .hover\:color-text:hover{color:var(--text);}
 
-.hover\:color-white:hover{--un-text-opacity:1;color:rgba(255,255,255,var(--un-text-opacity));}
+.hover\:color-white:hover{--un-text-opacity:1;color:rgb(255 255 255 / var(--un-text-opacity));}
 
 .backdrop-blur-16{--un-backdrop-blur:blur(16px);-webkit-backdrop-filter:var(--un-backdrop-blur) var(--un-backdrop-brightness) var(--un-backdrop-contrast) var(--un-backdrop-grayscale) var(--un-backdrop-hue-rotate) var(--un-backdrop-invert) var(--un-backdrop-opacity) var(--un-backdrop-saturate) var(--un-backdrop-sepia);backdrop-filter:var(--un-backdrop-blur) var(--un-backdrop-brightness) var(--un-backdrop-contrast) var(--un-backdrop-grayscale) var(--un-backdrop-hue-rotate) var(--un-backdrop-invert) var(--un-backdrop-opacity) var(--un-backdrop-saturate) var(--un-backdrop-sepia);}
 
@@ -419,6 +481,7 @@ pre[class*="language-"] {
 
 @media (min-width: 1024px){
 .lg\:grid-cols-\[2fr_1fr\]{grid-template-columns:2fr 1fr;}
+.lg\:grid-cols-\[max-content_1fr\]{grid-template-columns:max-content 1fr;}
 .lg\:grid-cols-3{grid-template-columns:repeat(3,minmax(0,1fr));}
 .lg\:block{display:block;}
 .lg\:flex{display:flex;}

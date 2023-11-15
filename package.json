@@ -1,34 +1,26 @@
 {
-  "name": "binary-lab",
-  "module": "src/server.tsx",
   "type": "module",
   "scripts": {
-    "dev": "clear && bun --watch src/server.tsx",
-    "devCSS": "clear && postcss src/index.css --dir public/stylesheets -w"
-  },
-  "devDependencies": {
-    "@types/pg": "^8.10.7",
-    "@unocss/cli": "^0.56.5",
-    "@unocss/postcss": "^0.56.5",
-    "bun-types": "latest",
-    "unocss": "^0.56.5"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+    "dev": "bun run --watch src/server.tsx",
+    "devCSS": "postcss src/index.css -o public/stylesheets/style.css -w"
   },
   "dependencies": {
     "@elysiajs/cookie": "^0.7.0",
-    "@elysiajs/html": "^0.7.0",
+    "@elysiajs/html": "^0.7.3",
     "@elysiajs/static": "^0.7.1",
-    "@kitajs/html": "^3.0.0",
-    "@kitajs/ts-html-plugin": "^1.2.0",
-    "@lucia-auth/adapter-postgresql": "^2.0.1",
-    "@lucia-auth/oauth": "^3.3.1",
-    "elysia": "latest",
-    "lucia": "latest",
-    "md-block": "^0.0.1",
+    "@lucia-auth/adapter-postgresql": "^2.0.2",
+    "@lucia-auth/oauth": "^3.5.0",
+    "@types/pg": "^8.10.9",
+    "@unocss/postcss": "^0.57.4",
+    "bun-types": "^1.0.11",
+    "drizzle-kit": "^0.20.2",
+    "drizzle-orm": "^0.29.0",
+    "elysia": "^0.7.25",
+    "lucia": "^2.7.4",
+    "pg": "^8.11.3",
     "postcss": "^8.4.31",
     "postcss-cli": "^10.1.0",
+    "unocss": "^0.57.4",
     "zero-md": "^2.5.3"
   }
 }

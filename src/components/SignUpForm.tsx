@@ -1,9 +1,10 @@
-export const SignUpForm = () => (
+export const SignUpForm = ({ err }: { err: string | null }) => (
   <tag
     of="dialog"
     class="b b-tertiary bg-glass backdrop-blur-16 top-50% left-50% translate-x--50% translate-y--50% p-4 rd-xl w-[min(100%,30rem)]"
     id="authModal"
   >
+    {err && <p class="color-red m-2">*{err}</p>}
     <fieldset class="fieldsetStyle">
       <legend class="legendStyle">Basic details (*required)</legend>
       <form id="basicDetailsForm">
@@ -27,7 +28,7 @@ export const SignUpForm = () => (
           class="inputStyle"
           type="text"
           placeholder="City"
-          name="city"
+          name="location"
           required="true"
         />
         <input
@@ -41,7 +42,7 @@ export const SignUpForm = () => (
     </fieldset>
     <fieldset class="fieldsetStyle">
       <legend class="legendStyle">Sign up with email & password</legend>
-      <form id="email-&-password">
+      <form id="credential" method="POST" action="/auth/sign-in/credential">
         <input
           class="inputStyle"
           type="email"
@@ -76,7 +77,7 @@ export const SignUpForm = () => (
       <button
         class={"inputStyle" + " relative"}
         value="Sign Up"
-        form="email-&-password"
+        form="credential"
       >
         <input
           type="submit"
@@ -89,7 +90,10 @@ export const SignUpForm = () => (
     </fieldset>
     <fieldset class="fieldsetStyle">
       <legend class="legendStyle">Sign in with auth providers</legend>
-      <button class={"inputStyle" + " relative"}>
+      <button
+        class={"inputStyle" + " relative"}
+        onclick='location.href = "/auth/sign-in/google"'
+      >
         <i class="fa-brands fa-google"></i> Sign in with Google
         <input
           type="submit"
@@ -120,7 +124,7 @@ export const SignUpForm = () => (
         hx-boost="true"
         hx-push-url="false"
         hx-target="#authModal"
-        hx-swap="outerHTML"
+        hx-swap="outerHTML transition:true"
         class="hover:drop-shadow-[0_0_.5rem_var(--secondary)] duration-200"
       >
         Sign in!
@@ -140,9 +144,9 @@ export const SignUpForm = () => (
 
       function saveAsCookie() {
         if(!basicDetailsForm.checkValidity()) return
-        const { name, phone, city, institute } = basicDetailsForm;
+        const { name, phone, location, institute } = basicDetailsForm;
         const expires = new Date(Date.now() + 10 * 60 * 1000).toUTCString();
-        document.cookie = \`basicDetails=\${JSON.stringify({ "name" : name.value, "phone" : phone.value, "location" : city.value, "institute" : institute.value })}; expires=\${expires}; path=/\`;
+        document.cookie = \`basicDetails=\${JSON.stringify({ "name" : name.value, "phone" : phone.value, "location" : location.value, "institute" : institute.value })}; expires=\${expires}; path=/\`;
       }
 
       function disableBasicFormButtonOverlay(){
@@ -151,7 +155,7 @@ export const SignUpForm = () => (
         })
       };
       
-      ['name', 'phone', 'city', 'institute'].forEach(field => {
+      ['name', 'phone', 'location', 'institute'].forEach(field => {
         basicDetailsForm[field].value = prevData[field] ?? "";
         basicDetailsForm[field].addEventListener("keyup", () => {
             saveAsCookie();

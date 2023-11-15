@@ -5,8 +5,8 @@ const floatIconClasses =
 
 export const Home = () => (
   <>
-    <section class="h-100vh grid place-items-center px-[min(7vw,4rem)]">
-      <h1 class="text-center font-bold line-height-80% uppercase w-[clamp(22rem,75vw,70rem)] animate-fade-in-up animate-ease text-accent drop-shadow-2rem">
+    <section class="h-100vh grid place-items-center">
+      <h1 class="text-center font-bold line-height-80% uppercase w-[clamp(22rem,75vw,70rem)] danimate-fade-in-up animate-ease text-accent drop-shadow-2rem translate-y--6rem">
         Learn programming in a new way!
       </h1>
       <img
@@ -63,8 +63,35 @@ export const Home = () => (
       />
     </section>
     <CourseList />
-    <section>
+    <section class="mt-12 grid gap-4">
       <h1>Features</h1>
+      <div>
+        <h4>Practical learning</h4>
+        <p>
+          Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
+          cillum sint consectetur cupidatat.Lorem ipsum dolor sit amet, qui
+          minim labore adipisicing minim sint cillum sint consectetur
+          cupidatat.fafafa
+        </p>
+      </div>
+      <div>
+        <h4>Practical learning</h4>
+        <p>
+          Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
+          cillum sint consectetur cupidatat.Lorem ipsum dolor sit amet, qui
+          minim labore adipisicing minim sint cillum sint consectetur
+          cupidatat.fafafa
+        </p>
+      </div>
+      <div>
+        <h4>Practical learning</h4>
+        <p>
+          Lorem ipsum dolor sit amet, qui minim labore adipisicing minim sint
+          cillum sint consectetur cupidatat.Lorem ipsum dolor sit amet, qui
+          minim labore adipisicing minim sint cillum sint consectetur
+          cupidatat.fafafa
+        </p>
+      </div>
     </section>
   </>
 );

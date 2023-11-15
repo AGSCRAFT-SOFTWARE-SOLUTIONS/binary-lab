@@ -1,12 +1,13 @@
-export const SignInForm = () => (
+export const SignInForm = ({ err }: { err: string | null }) => (
   <tag
     of="dialog"
     class="b b-tertiary bg-glass backdrop-blur-16 top-50% left-50% translate-x--50% translate-y--50% p-4 rd-xl w-[min(100%,30rem)]"
     id="authModal"
   >
+    {err && <p class="color-red m-2">*{err}</p>}
     <fieldset class="fieldsetStyle">
       <legend class="legendStyle">Sign in with email & password</legend>
-      <form>
+      <form method="POST" action="/auth/sign-in/credential">
         <input
           class="inputStyle"
           type="text"
@@ -30,10 +31,16 @@ export const SignInForm = () => (
     </fieldset>
     <fieldset class="fieldsetStyle">
       <legend class="legendStyle">Sign in with auth providers</legend>
-      <button class="inputStyle">
+      <button
+        class="inputStyle"
+        onclick='location.href = "/auth/sign-in/google"'
+      >
         <i class="fa-brands fa-google"></i> Sign in with Google
       </button>
-      <button class="inputStyle">
+      <button
+        class="inputStyle"
+        onclick='location.href = "/auth/sign-in/github"'
+      >
         <i class="fa-brands fa-github"></i> Sign in with Github
       </button>
     </fieldset>
@@ -45,7 +52,7 @@ export const SignInForm = () => (
         hx-boost="true"
         hx-push-url="false"
         hx-target="#authModal"
-        hx-swap="outerHTML"
+        hx-swap="outerHTML transition:true"
         class="hover:drop-shadow-[0_0_.5rem_var(--secondary)] duration-200 z-24 relative"
       >
         Create one!
