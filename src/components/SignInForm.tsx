@@ -1,4 +1,4 @@
-export const SignInForm = ({ err }: { err: string | null }) => (
+export default ({ err }: { err?: string | null }) => (
   <tag
     of="dialog"
     class="b b-tertiary bg-glass backdrop-blur-16 top-50% left-50% translate-x--50% translate-y--50% p-4 rd-xl w-[min(100%,30rem)]"
@@ -13,7 +13,7 @@ export const SignInForm = ({ err }: { err: string | null }) => (
           type="text"
           placeholder="Email"
           name="email"
-          required="true"
+          required={true}
           title="Must be in this pattern username123@service.domain"
           pattern=".+@.+[.].{2,}"
         />
@@ -22,7 +22,7 @@ export const SignInForm = ({ err }: { err: string | null }) => (
           type="password"
           placeholder="Password"
           name="password"
-          required="true"
+          required={true}
           title="Must atleast 8 characters, no special characters allowed"
           pattern="[A-Za-z0-9]{8,}"
         />
@@ -46,9 +46,9 @@ export const SignInForm = ({ err }: { err: string | null }) => (
     </fieldset>
     <br />
     <p class="text-center">
-      Don't have an account?{" "}
+      Don't have an account?
       <a
-        href="/sign-up-form"
+        href="/auth/sign-up-form"
         hx-boost="true"
         hx-push-url="false"
         hx-target="#authModal"

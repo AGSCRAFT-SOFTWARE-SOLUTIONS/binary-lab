@@ -8,6 +8,7 @@ import {
   boolean,
   integer,
   uuid,
+  jsonb,
 } from "drizzle-orm/pg-core";
 
 export const role = pgEnum("role", ["admin", "teacher", "student"]);
@@ -26,6 +27,7 @@ export const userRelations = relations(users, ({ many }) => ({
   userCourses: many(userCourses),
   userChapters: many(userChapters),
   certificates: many(certificates),
+  quizzes: many(quizzes),
 }));
 
 export const credentials = pgTable("credentials", {
@@ -64,9 +66,11 @@ export const chapters = pgTable("chapters", {
   id: uuid("id").primaryKey().defaultRandom(),
   courseId: uuid("course_id"),
   title: text("title").notNull(),
-  videoLink: text("video_link").notNull(),
-  descriptionFileLink: text("description_file_link").notNull(),
-  thumbnailLink: text("thumbnail_link").notNull(),
+  videoLinks: jsonb("video_links")
+    .$type<{ "480": string; "720": string; "1080": string }>()
+    .notNull(),
+  description: text("description").notNull(),
+  thumbnail: text("thumbnail").notNull(),
   tags: text("tags").array().notNull(),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at"),
@@ -125,4 +129,53 @@ export const certificatesRelations = relations(certificates, ({ one }) => ({
     fields: [certificates.userId],
     references: [users.id],
   }),
+}));
+
+export const quizzes = pgTable("quizzes", {
+  id: uuid("id").primaryKey().defaultRandom().primaryKey(),
+  question: text("question").notNull(),
+  answers: jsonb("answers").$type<{ [key: string]: string }>().notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const userQuizzes = pgTable("user_quizzes", {
+  userId: text("user_id").notNull(),
+  quizId: uuid("quiz_id").notNull(),
+});
+
+export const userQuizzesRelations = relations(userQuizzes, ({ one }) => ({
+  user: one(users, { fields: [userQuizzes.userId], references: [users.id] }),
+  quizz: one(quizzes, {
+    fields: [userQuizzes.quizId],
+    references: [quizzes.id],
+  }),
+}));
+
+export const faqs = pgTable("faqs", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  title: text("titel").notNull(),
+});
+
+export const faqsRelations = relations(faqs, ({ many }) => ({
+  comments: many(comments),
+}));
+
+export const comments = pgTable("comments", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  userId: text("user_id").notNull(),
+  content: text("thought").notNull(),
+  belongsTo: uuid("belongs_to").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const commentRelations = relations(comments, ({ one }) => ({
+  faq: one(faqs, {
+    fields: [comments.belongsTo],
+    references: [faqs.id],
+  }),
+  chapter: one(chapters, {
+    fields: [comments.belongsTo],
+    references: [chapters.id],
+  }),
+  user: one(users, { fields: [comments.userId], references: [users.id] }),
 }));

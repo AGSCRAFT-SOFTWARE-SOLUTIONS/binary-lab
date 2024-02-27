@@ -1,0 +1,3 @@
+#filtersContainer.opened > form {
+  display: grid;
+}

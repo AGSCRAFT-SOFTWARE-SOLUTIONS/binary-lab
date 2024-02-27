@@ -1,9 +1,9 @@
 import { User } from "../types/types";
 
-export const Profile = async ({ user }: { user: User }) =>
+export default async ({ user }: { user: User }) =>
   user && (
     <section class="grid lg:grid-cols-[max-content_1fr] gap-12">
-      <div>
+      <div class=" max-w-25rem">
         <img
           aria-label={user.name}
           src={`https://api.dicebear.com/7.x/big-smile/svg?seed=${user.name}`}
@@ -12,7 +12,7 @@ export const Profile = async ({ user }: { user: User }) =>
         />
         <br />
         <br />
-        <h2>{user.name}</h2>
+        <h2 class="break-all">{user.name}</h2>
         <p>Email : {user.email}</p>
         <p>Phone : {user.phone}</p>
         <p>Location : {user.location}</p>

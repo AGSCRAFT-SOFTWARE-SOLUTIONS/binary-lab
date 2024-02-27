@@ -1,4 +1,4 @@
-export const SignUpForm = ({ err }: { err: string | null }) => (
+export default ({ err }: { err: string | null }) => (
   <tag
     of="dialog"
     class="b b-tertiary bg-glass backdrop-blur-16 top-50% left-50% translate-x--50% translate-y--50% p-4 rd-xl w-[min(100%,30rem)]"
@@ -13,14 +13,14 @@ export const SignUpForm = ({ err }: { err: string | null }) => (
           type="text"
           placeholder="Name"
           name="name"
-          required="true"
+          required={true}
         />
         <input
           class="inputStyle"
           type="number"
           placeholder="Phone number"
           name="phone"
-          required="true"
+          required={true}
           title="10 digits"
           pattern="[0-9]{10}"
         />
@@ -29,26 +29,26 @@ export const SignUpForm = ({ err }: { err: string | null }) => (
           type="text"
           placeholder="City"
           name="location"
-          required="true"
+          required={true}
         />
         <input
           class="inputStyle"
           type="text"
           placeholder="Institute"
           name="institute"
-          required="true"
+          required={true}
         />
       </form>
     </fieldset>
     <fieldset class="fieldsetStyle">
       <legend class="legendStyle">Sign up with email & password</legend>
-      <form id="credential" method="POST" action="/auth/sign-in/credential">
+      <form id="credential" method="POST" action="/auth/sign-up/credential">
         <input
           class="inputStyle"
           type="email"
           placeholder="Email"
           name="email"
-          required="true"
+          required={true}
           title="Must be in this pattern username123@service.domain"
           pattern=".+@.+[.].{2,}"
         />
@@ -57,7 +57,7 @@ export const SignUpForm = ({ err }: { err: string | null }) => (
           type="password"
           placeholder="Password"
           name="password"
-          required="true"
+          required={true}
           title="Must atleast 8 characters, no special characters allowed"
           pattern="[A-Za-z0-9]{8,}"
           oninput="updatePasswordCondirmation(password.value,passwordConfirmation)"
@@ -67,7 +67,7 @@ export const SignUpForm = ({ err }: { err: string | null }) => (
           type="password"
           placeholder="Re-enter password"
           name="passwordConfirmation"
-          required="true"
+          required={true}
           title="Must match the password entered above"
         />
         <script>{`function updatePasswordCondirmation(password,target){
@@ -120,7 +120,7 @@ export const SignUpForm = ({ err }: { err: string | null }) => (
     <p class="text-center">
       Already have an account?{" "}
       <a
-        href="/sign-in-form"
+        href="/auth/sign-in-form"
         hx-boost="true"
         hx-push-url="false"
         hx-target="#authModal"

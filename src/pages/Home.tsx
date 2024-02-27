@@ -1,9 +1,9 @@
-import { CourseList } from "./CourseList";
+import CourseList from "./CourseList";
 
 const floatIconClasses =
   `h-[clamp(3rem,5vw,5rem)] drop-shadow-2rem absolute animate-ease` + ` `;
 
-export const Home = () => (
+export default () => (
   <>
     <section class="h-100vh grid place-items-center">
       <h1 class="text-center font-bold line-height-80% uppercase w-[clamp(22rem,75vw,70rem)] danimate-fade-in-up animate-ease text-accent drop-shadow-2rem translate-y--6rem">

@@ -1,6 +1,9 @@
-export const Footer = () => (
+import { db } from "../lib/db/drizzle";
+
+const courses = await db.query.courses.findMany({ columns: { title: true } });
+export default () => (
   <footer class="bg-secondary grid place-items-center py-10">
-    <div class="w-[clamp(22rem,75vw,80rem)] grid gap-8 lg:grid-cols-[2fr_1fr]">
+    <div class="w-[clamp(22rem,90vw,104rem)] grid gap-8 lg:grid-cols-[2fr_1fr]">
       <div>
         <h3 class="uppercase font-bold text-5">AGScraft software solutions</h3>
         <p class="line-height-tight">
@@ -43,39 +46,33 @@ export const Footer = () => (
               Playground
             </a>
             <br />
-            <a aria-label="help" href="" class="hover:color-text">
-              Help
+            <a aria-label="faq" href="/faq" class="hover:color-text">
+              FAQ
             </a>
           </p>
         </div>
         <div>
           <h6>Courses</h6>
           <p class="line-height-tight pl-2 ">
-            <a aria-label="c course" href="" class="hover:color-text">
-              C
-            </a>
-            <br />
-            <a aria-label="c++ course" href="" class="hover:color-text">
-              C++
-            </a>
-            <br />
-            <a aria-label="java course" href="" class="hover:color-text">
-              Java
-            </a>
-            <br />
-            <a aria-label="python course" href="" class="hover:color-text">
-              Python
-            </a>
-            <br />
-            <a
-              aria-label="web development course"
-              href=""
-              class="hover:color-text"
-            >
-              Web Development
-            </a>
+            {courses.map((course) => (
+              <>
+                <a
+                  aria-label={course.title}
+                  href={`courses/${course.title}`}
+                  class="hover:color-text"
+                >
+                  {course.title}
+                </a>
+
+                <br />
+              </>
+            ))}
           </p>
         </div>
+        <script
+          src="https://kit.fontawesome.com/7ae938555b.js"
+          crossorigin="anonymous"
+        ></script>
         <div>
           <h6>Follow Us</h6>
           <div class="flex gap-2">

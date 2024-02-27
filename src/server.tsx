@@ -1,28 +1,67 @@
 /// <reference types="@kitajs/html/htmx.d.ts" />
 
-import { html } from "@elysiajs/html";
-import Html, { Children } from "@kitajs/html";
+// Elysia is the backend server for Bun
 import Elysia, { t } from "elysia";
-import { Header } from "./components/Header";
+// To use tsx
+import Html, { html } from "@elysiajs/html";
+// To server static files
 import staticPlugin from "@elysiajs/static";
-import { Footer } from "./components/Footer";
-import { Home } from "./pages/Home";
-import { CourseList } from "./pages/CourseList";
-import { Course } from "./pages/Course";
-import { SignInForm } from "./components/SignInForm";
-import { SignUpForm } from "./components/SignUpForm";
-import { auth, githubAuth, googleAuth } from "./lib/auth/lucia";
+// To set cookies on client side
 import { cookie } from "@elysiajs/cookie";
-import { Profile } from "./pages/Profile";
-import { User } from "./types/types";
+// Auth
+import { auth, githubAuth, googleAuth } from "./lib/auth/lucia";
+// Types of auth variables
 import { AuthRequest, LuciaError, Session } from "lucia";
-import { Ide } from "./pages/Ide";
+// The db connection
+import { db } from "./lib/db/drizzle";
+// SQL operators
+import { asc, desc, eq } from "drizzle-orm";
+// db schemas
+import {
+  chapters,
+  comments,
+  courses,
+  faqs,
+  quizzes,
+  userQuizzes,
+} from "./lib/db/schema";
+// Type of context of the request
+import { Context } from "vm";
+// Pages
+import Home from "./pages/Home";
+import CourseList from "./pages/CourseList";
+import Profile from "./pages/Profile";
+import Ide from "./pages/Ide";
+import Quiz from "./pages/Quiz";
+import FAQ from "./pages/FAQ";
+import Error from "./pages/Error";
+// Components
+import Course from "./components/Course";
+import SignInForm from "./components/SignInForm";
+import SignUpForm from "./components/SignUpForm";
+import { User } from "./types/types";
+import BaseHTML from "./components/BaseHTML";
+import Chapter from "./components/Chapter";
+import QuizList from "./components/QuizList";
+import FAQConvo from "./components/FAQConvo";
+import CUDFAQ from "./components/CUDFAQ";
 
-let user: User, session: Session, authRequest: AuthRequest;
+// Declaring and exoprting these variables. Refer comment above
+// `onRequest` method for explaination
+export let user: User, session: Session, authRequest: AuthRequest;
+
+// Send either the component alone or the entire page based on the
+// request, as the requests that need only the component have
+// "hx-request" in them as we use htmx for frontend
+const smartResponse = (ctx: Context, component: JSX.Element) =>
+  ctx.headers?.["hx-request"] ? component : <BaseHTML>{component}</BaseHTML>;
+
 new Elysia()
   .use(html())
   .use(staticPlugin())
   .use(cookie())
+  // Validate whether the user is logged in or not on every request,
+  // so that they can be served with content they are allowed to receive
   .onRequest(async (ctx) => {
     authRequest = auth.handleRequest(ctx);
     session = await authRequest.validate();
@@ -34,15 +73,89 @@ new Elysia()
       .get(`/`, (ctx) => smartResponse(ctx, <CourseList />))
       .group(`/:course`, (app) =>
         app
-          .get(
-            `/`,
-            (ctx) => (ctx.set.redirect = `/courses/${ctx.params.course}/0`),
-          )
-          .get(`/:ep`, (ctx) =>
-            smartResponse(
-              ctx,
-              <Course course={ctx.params.course} ep={Number(ctx.params.ep)} />,
-            ),
+          .get(`/`, async (ctx) => {
+            const course = await db.query.courses.findFirst({
+              where: eq(courses.title, decodeURI(ctx.params.course)),
+              with: {
+                chapters: {
+                  with: { course: true },
+                },
+              },
+            });
+            return (ctx.set.redirect = `/courses/${ctx.params.course}/${course?.chapters[0].title}`);
+          })
+          .group("/:chapter", (app) =>
+            app
+              .get(`/`, async (ctx) => {
+                const course = await db.query.courses.findFirst({
+                  where: eq(courses.title, decodeURI(ctx.params.course)),
+                  with: {
+                    chapters: {
+                      with: { course: true },
+                    },
+                  },
+                });
+
+                const currentChapter = course?.chapters.find(
+                  (chapter) => chapter.title == ctx.params.chapter,
+                );
+                if (ctx.headers?.["hx-request"]) {
+                  return (
+                    <Chapter
+                      course={course?.title!}
+                      chapter={currentChapter!}
+                    />
+                  );
+                } else {
+                  return (
+                    <BaseHTML>
+                      <Course course={course!}>
+                        <Chapter
+                          course={course?.title!}
+                          chapter={currentChapter!}
+                        />
+                      </Course>
+                    </BaseHTML>
+                  );
+                }
+              })
+              .get("/video", async (ctx) => {
+                const videoQuality = ctx.query.quality! as
+                  | "480"
+                  | "720"
+                  | "1080";
+                const videoLinks = await db.query.courses
+                  .findFirst({
+                    where: eq(courses.title, decodeURI(ctx.params.course)),
+                    with: {
+                      chapters: {
+                        where: eq(
+                          chapters.title,
+                          decodeURI(ctx.params.chapter),
+                        ),
+                      },
+                    },
+                  })
+                  .then((res) => res?.chapters[0].videoLinks);
+
+                const video = Bun.file(videoLinks![videoQuality]);
+                const videoSize = video.size;
+                const chunkSize = 10e4;
+                const start = Number(ctx.headers.range?.replace(/\D/g, "")!);
+                const end = Math.min(start + chunkSize, videoSize - 1);
+
+                const contentLength = end - start + 1;
+                ctx.set.headers = {
+                  "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+                  "Accept-Ranges": "bytes",
+                  "Content-Length": contentLength.toString(),
+                  "Content-Type": "video/mp4",
+                };
+                ctx.set.status = 206;
+                const videoStream = video.slice(start, end);
+
+                return videoStream;
+              }),
           ),
       ),
   )
@@ -53,30 +166,30 @@ new Elysia()
         smartResponse(ctx, <Ide lang={ctx.params.lang} />),
       ),
   )
-  .get(`/sign-in-form`, ({ headers, query }) =>
-    headers["hx-request"] ? (
-      <SignInForm err={query.err} />
-    ) : (
-      <BaseHTML>
-        <SignInForm err={query.err} />
-        <Home />
-        <script>{`window.history.pushState({},"","/")`}</script>
-      </BaseHTML>
-    ),
-  )
-  .get(`/sign-up-form`, ({ headers, query }) =>
-    headers["hx-request"] ? (
-      <SignUpForm err={query.err} />
-    ) : (
-      <BaseHTML>
-        <SignUpForm err={query.err} />
-        <Home />
-        <script>{`window.history.pushState({},"","/")`}</script>
-      </BaseHTML>
-    ),
-  )
   .group("/auth", (app) =>
     app
+      .get(`/sign-in-form`, ({ headers, query }) =>
+        headers["hx-request"] ? (
+          <SignInForm err={query.err} />
+        ) : (
+          <BaseHTML>
+            <SignInForm err={query.err} />
+            <Home />
+            <script>{`window.history.pushState({},"","/")`}</script>
+          </BaseHTML>
+        ),
+      )
+      .get(`/sign-up-form`, ({ headers, query }) =>
+        headers["hx-request"] ? (
+          <SignUpForm err={query.err} />
+        ) : (
+          <BaseHTML>
+            <SignUpForm err={query.err} />
+            <Home />
+            <script>{`window.history.pushState({},"","/")`}</script>
+          </BaseHTML>
+        ),
+      )
       .group(`/sign-up`, (app) =>
         app.post(
           `/credential`,
@@ -132,7 +245,8 @@ new Elysia()
               return;
             } catch (e) {
               ctx.set.status = 400;
-              ctx.set.redirect = "/sign-up-form?err=account already exists";
+              ctx.set.redirect =
+                "/auth/sign-up-form?err=account already exists";
               return;
             }
           },
@@ -189,7 +303,7 @@ new Elysia()
                 ) {
                   ctx.set.status = 400;
                   ctx.set.redirect =
-                    "/sign-in-form?err=Incorrect email or password";
+                    "/auth/sign-in-form?err=Incorrect email or password";
                   return "Incorrect email or password";
                 }
 
@@ -329,7 +443,7 @@ new Elysia()
 
                   const user = await getUser();
                   if (!user) {
-                    ctx.set.redirect = "/sign-up-form";
+                    ctx.set.redirect = "/auth/sign-up-form";
                   }
                   const session = await auth.createSession({
                     userId: user.userId,
@@ -362,6 +476,82 @@ new Elysia()
         return;
       }),
   )
+  .group("/faq", (app) =>
+    app
+      .get("/", (ctx) => smartResponse(ctx, <FAQ />))
+      .get("/:query", (ctx) =>
+        smartResponse(
+          ctx,
+          <FAQConvo title={decodeURI(ctx.params.query)} user={user} />,
+        ),
+      )
+      // cud stands for create/update/delete
+      .get("/cud/:query", async (ctx) => {
+        const param = decodeURI(ctx.params.query);
+        const query =
+          param == "new"
+            ? undefined
+            : await db.query.faqs.findFirst({
+                where: eq(faqs.title, param),
+              });
+        return smartResponse(ctx, <CUDFAQ query={query} />);
+      })
+      // cud stands for create/update/delete
+      .post(
+        "/cud/new",
+        async (ctx) => {
+          const { title, content } = ctx.body;
+          try {
+            await db.transaction(async (tx) => {
+              const newFaq = await tx
+                .insert(faqs)
+                .values({ title })
+                .returning();
+              await tx
+                .insert(comments)
+                .values({ content, userId: user.id, belongsTo: newFaq[0].id });
+            });
+            return (ctx.set.redirect = `/faq/${title}`);
+          } catch (err) {
+            return <Error err={"Something went wront"} />;
+          }
+        },
+        {
+          body: t.Object({ title: t.String(), content: t.String() }),
+        },
+      )
+      .patch(
+        "/cud/:query",
+        async (ctx) => {
+          const param = decodeURI(ctx.params.query);
+          const query = await db.query.faqs.findFirst({
+            where: eq(faqs.title, param),
+            with: {
+              comments: { orderBy: [asc(comments.createdAt)] },
+            },
+          });
+
+          if (user.id != query?.comments[0].userId) {
+            ctx.set.status = 403;
+            return <Error err="Forbidden request" />;
+          }
+
+          const { title, content } = ctx.body;
+          await db
+            .update(faqs)
+            .set({ title })
+            .where(eq(faqs.title, query.title));
+          await db
+            .update(comments)
+            .set({ content })
+            .where(eq(comments.content, query.comments[0].content));
+
+          ctx.set.status = 200;
+          return <script>window.location=`/faq/{title}`</script>;
+        },
+        { body: t.Object({ title: t.String(), content: t.String() }) },
+      ),
+  )
   .get(`/profile`, async (ctx) => {
     const authRequest = auth.handleRequest(ctx);
     const session = await authRequest.validate();
@@ -372,66 +562,132 @@ new Elysia()
     ctx.set.redirect = ctx.headers?.["hx-current-url"] ?? "/";
     return;
   })
-  .get("/video", () => Bun.file("public/assets/sample-video.mp4"))
+  .get("/video", (ctx) => {
+    const video = Bun.file("public/assets/sample-video.mp4");
+    const range = ctx.headers.range;
+    const videoSize = video.size;
+    const chunckSize = 10e4;
+    const start = Number(range?.replace(/\D/g, ""));
+    const end = Math.min(start + chunckSize, videoSize - 1);
+    const contentLength = end - start + 1;
+
+    ctx.set.headers = {
+      "Content-Range": `bytes ${start}-${end}/${videoSize}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": contentLength.toString(),
+      "Content-Type": "video/mp4",
+    };
+
+    ctx.set.status = 206;
+    const videoStream = video.slice(start, end);
+
+    return videoStream;
+  })
+  .group(`/quiz`, (app) =>
+    app
+      .get(`/`, async (ctx) => {
+        if (!user) return (ctx.set.redirect = "/auth/sign-in-form");
+        const retrievedQuizzes = await db.query.quizzes.findMany({
+          orderBy: [desc(quizzes.createdAt)],
+        });
+        const retrievedUserQuizzes = await db.query.userQuizzes.findMany({
+          where: eq(userQuizzes.userId, user.id),
+        });
+        if (retrievedUserQuizzes.length == 0)
+          return smartResponse(
+            ctx,
+            <Quiz>
+              <QuizList quizzes={retrievedQuizzes} />
+            </Quiz>,
+          );
+        if (retrievedQuizzes.length == retrievedUserQuizzes.length)
+          return smartResponse(
+            ctx,
+            <Quiz>
+              <QuizList />
+            </Quiz>,
+          );
+
+        const notCompletedQuizzes = retrievedQuizzes.filter((quiz) =>
+          retrievedUserQuizzes.some((userQuiz) => userQuiz.quizId != quiz.id),
+        );
+        return smartResponse(
+          ctx,
+          <Quiz>
+            <QuizList quizzes={notCompletedQuizzes} />
+          </Quiz>,
+        );
+      })
+      .post(
+        `/submit`,
+        async (ctx) => {
+          const quizId = Object.keys(ctx.body)[0];
+          const submittedAns = Object.values(ctx.body)[0];
+          const quiz = await db.query.quizzes.findFirst({
+            where: eq(quizzes.id, quizId),
+          });
+          const answer =
+            quiz &&
+            Object.keys(quiz.answers).filter(
+              (ans) => quiz?.answers[ans] == "true",
+            )[0];
+
+          if (!user) {
+            ctx.set.status = 401;
+            return <SignInForm />;
+          }
+
+          if (submittedAns == answer) {
+            await db.insert(userQuizzes).values({ userId: user.id, quizId });
+            return 1;
+          } else return 0;
+        },
+        {
+          body: t.ObjectString({}),
+        },
+      )
+      .post(
+        `/filter`,
+        async (ctx) => {
+          const sortBy = ctx.body.sortBy;
+          const status = ctx.body.status;
+
+          const sortedQuizzes = await db.query.quizzes.findMany({
+            orderBy: [
+              sortBy == "new"
+                ? desc(quizzes.createdAt)
+                : asc(quizzes.createdAt),
+            ],
+          });
+          if (status == "all") return <QuizList quizzes={sortedQuizzes} />;
+
+          let filteredQuizzes = sortedQuizzes;
+          const retrievedUserQuizzes = await db.query.userQuizzes.findMany({
+            where: eq(userQuizzes.userId, user.id),
+          });
+          if (status == "notCompleted") {
+            if (sortedQuizzes.length == retrievedUserQuizzes.length) return;
+            if (retrievedUserQuizzes.length == 0)
+              return <QuizList quizzes={sortedQuizzes} />;
+            filteredQuizzes = sortedQuizzes.filter((quiz) =>
+              retrievedUserQuizzes.some(
+                (userQuiz) => userQuiz.quizId != quiz.id,
+              ),
+            );
+          } else if (status == "completed") {
+            filteredQuizzes = sortedQuizzes.filter((quiz) =>
+              retrievedUserQuizzes.some(
+                (userQuiz) => userQuiz.quizId == quiz.id,
+              ),
+            );
+          }
+          return <QuizList quizzes={filteredQuizzes} />;
+        },
+        { body: t.Object({ sortBy: t.String(), status: t.String() }) },
+      ),
+  )
   .get("/md", () => Bun.file("README.md"))
-  .listen(3000, ({ hostname, port }) =>
+  .get("/*", (ctx) => smartResponse(ctx, <Error />))
+  .listen(5555, ({ hostname, port }) =>
     console.log(`🦊 runnin on http://${hostname}:${port}`),
   );
-
-const smartResponse = (ctx: any, component: JSX.Element) => {
-  return ctx.headers?.["hx-request"] ? (
-    component
-  ) : (
-    <BaseHTML>{component}</BaseHTML>
-  );
-};
-
-const BaseHTML = ({ children }: { children?: Children }) => (
-  <>
-    {"<!doctype html>"}
-    <html lang="en">
-      <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Binary Lab</title>
-        <link rel="stylesheet" href="/public/stylesheets/style.css" />
-        <link rel="preconnect" href="https://fonts.googleapis.com"></link>
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossorigin="true"
-        ></link>
-        <link
-          href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Gabarito&&family=Ubuntu+Mono&family=Pixelify+Sans&display=swap"
-          rel="stylesheet"
-        ></link>
-        <script
-          src="https://kit.fontawesome.com/7ae938555b.js"
-          crossorigin="anonymous"
-          defer
-        ></script>
-        <script
-          src="https://unpkg.com/htmx.org@1.9.6"
-          integrity="sha384-FhXw7b6AlE/jyjlZH5iHa/tTe9EpJ1Y55RjcgPbjeWMskSxZt1v9qkxLJWNJaGni"
-          crossorigin="anonymous"
-          defer
-        ></script>
-      </head>
-      <body class="box-border bg-primary color-white">
-        <div
-          id="stars"
-          class="animate-shake-y animate-duration-30000 animate-iteration-infinite"
-        ></div>
-        <Header user={user} />
-        <main
-          id="swap-container"
-          class="py-6rem px-[min(7vw,4rem)] max-w-104rem m-a"
-        >
-          {children}
-        </main>
-        <Footer />
-      </body>
-      <script>console.log("SDafsdfa");</script>
-    </html>
-  </>
-);

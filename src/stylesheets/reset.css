@@ -4,6 +4,7 @@
   --tertiary: #082f49;
   --glass: color-mix(in srgb, var(--tertiary), transparent 75%);
   --text: #ffffff;
+  --green75: color-mix(in srgb, green, transparent 75%);
 }
 
 * {
@@ -15,49 +16,7 @@
   color: var(--text);
   text-decoration: none;
   font-family: Ubuntu Mono;
-  outline: transparent;
-}
-
-a:not(header a):not(footer a) {
-  color: var(--secondary);
-  text-decoration: underline;
-}
-
-::selection {
-  background: var(--secondary);
-}
-
-dialog::backdrop {
-  background: color-mix(in srgb, #082f49, transparent);
-  backdrop-filter: blur(2px);
-}
-
-::placeholder {
-  color: color-mix(in srgb, var(--text), transparent);
-}
-
-::-webkit-scrollbar {
-  background: none;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--glass);
-  border-radius: 100vmax;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type="number"] {
-  -moz-appearance: textfield;
-}
-
-input[required="true"]::after {
-  content: "asdfk";
+  font-size: 1rem;
 }
 
 h1,
@@ -67,7 +26,6 @@ h4,
 h5,
 h6 {
   font-family: "Gabarito", sans-serif;
-  /* font-family: Pixelify Sans; */
 }
 
 h1 {
@@ -78,10 +36,50 @@ h2 {
   font-size: clamp(1rem, 10vw, 3rem);
 }
 
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
+a:not(header a, footer a) {
+  color: var(--secondary);
+  text-decoration: underline;
+}
+
+::selection {
+  background: var(--secondary);
+}
+
+dialog::backdrop {
+  backdrop-filter: blur(2px);
+}
+
+::placeholder {
+  color: color-mix(in srgb, var(--text), transparent);
+}
+
+::-webkit-scrollbar {
+  background: none;
+  width: 0.5rem;
+}
+
+::-webkit-scrollbar-thumb {
   background: var(--glass);
-  @apply rd-lg;
+  border-radius: 100vmax;
+}
+
+::-webkit-scrollbar-corner {
+  display: none;
+}
+
+input,
+textarea {
+  outline: transparent;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
 }
 
 #stars {
@@ -195,5 +193,3 @@ pre[class*="language-"] {
     40vw 10vh 0px 0px var(--star-color),
     -21vw 22vh 0px 0px var(--star-color);
 }
-
-@unocss;
